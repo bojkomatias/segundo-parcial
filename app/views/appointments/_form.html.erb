@@ -1,0 +1,39 @@
+<%= form_with(model: appointment) do |form| %>
+  <% if appointment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+      <ul>
+        <% appointment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+<div class='my-24 mx-96 text-gray-200'>
+  <div class="field text-xl text-black">
+   <div class="text-white"><%= form.label :date %></div> 
+    <%= form.datetime_select :date, class: " p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 border-gray-300 rounded-md", placeholder: "Name" %>
+  </div>
+
+  <div class="field text-xl">
+    <%= form.label :worker_id %>
+    <div class="flex justify-center p-2 text-black block w-full pl-7 pr-12 border-gray-300 rounded-md">
+      <%= form.collection_select :worker_id, Worker.where(["worker_type_id = 1"]), :id, :last_name %>
+    </div>
+  </div>
+  <div class="field text-xl">
+    <%= form.label :medical_center_id %>
+    <div class="flex justify-center p-2 text-black block w-full pl-7 pr-12 border-gray-300 rounded-md">
+      <%= form.collection_select :medical_center_id, MedicalCenter.all, :id, :name %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="flex w-full">
+      <%= form.submit "Crear Nuevo Turno", :class=> "my-3 w-full flex justify-center py-2 px-4 border border-transparent text-xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"  %>
+    </div>
+  </div>
+<% end %>
